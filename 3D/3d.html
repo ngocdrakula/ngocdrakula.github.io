@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            3D Test
+        </title>
+    </head>
+    <body>
+        <canvas id="3d" height="500px" width="500px">
+        </canvas>
+        <div id="dats"></div>
+        <script>
+        var cv = document.getElementById("3d");
+        var c = cv.getContext("2d");
+        var a = 500;
+        var b = 00;
+        var x = new Array(9);
+        var y = new Array(9);
+        var data = "";
+            x[0] = 00;
+            y[0] = 10;
+            x[1] = 200;
+            y[1] = 200;
+            x[2] = 300;
+            y[2] = 200;
+            x[3] = 300;
+            y[3] = 300;
+            x[4] = 200;
+            y[4] = 300;
+            x[5] = 250;
+            y[5] = 170;
+            x[6] = 350;
+            y[6] = 150;
+            x[7] = 350;
+            y[7] = 250;
+            x[8] = 250;
+            y[8] = 250;
+        function show (x1,y1,x2,y2){
+            c.moveTo(x1,y1);
+            c.lineTo(x2,y2);
+            c.stroke();
+        }
+        function showall(){
+            for(let i=1;i<=9;i++)
+            {
+                if(i!=4&&i!=8)
+                    show(x[i],y[i],x[i+1],y[i+1]);
+                else
+                    show(x[i],y[i],x[i-3],y[i-3]);
+                if (i<=4)
+                    show(x[i],y[i],x[i+4],y[i+4]);
+                
+            }
+        }
+        function timy(x0,x01,y01,x02,y02){
+            return (((y01-y02)*x0 + y02*x01 - y01*x02)/(x01-x02));
+        }
+        function timx(y0,x01,y01,x02,y02){
+            return ((y0-(y02*x01-y01*x02)/(x01-x02))/((y01-y02)/(x01-x02)));
+        }
+        
+        x[5]=timx(y[5],x[0],y[0],x[1],y[1]);
+        y[6]=y[5];
+        x[6]=timx(y[6],x[0],y[0],x[2],y[2]);
+        x[7]=x[6];
+        y[7]=timy(x[7],x[0],y[0],x[3],y[3]);
+        y[8]=y[7];
+        x[8]=x[5];
+        for(let i=1;i<=4;i++){
+            //show(x[1],y[0],timx(500,x[0],y[0],x[i],y[i]),500);
+
+            data = data + timx(500,x[0],y[0],x[i],y[i]) + " , ";
+        }
+
+        showall();
+        document.getElementById("dats").innerHTML=data;
+        </script>
+    </body>
+</html>
